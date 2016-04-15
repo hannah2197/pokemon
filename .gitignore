@@ -1,0 +1,12 @@
+*
+!*.html
+!*.php
+!*.js
+!*.css
+!*.sql
+!.gitignore
+!*.md
+!*.jpg
+!*.png
+!*.gif
+!*.htm
