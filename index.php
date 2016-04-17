@@ -8,28 +8,28 @@
 		</div>
 	<div align="center" style="padding-top: 10px;">
 		<div style="display:block; width: 500px; height: 70px;" align="center" >	
-			<a href="/pokemon/?p1=1">
+			<a href="./?p1=1">
 				<p style="padding: 20px; color: #fff; font-size: 12px; background-color: #c52018;">List pokemon based on type or weight</p>
 			</a><br>
 		</div>
 		<div style="display:block; width: 500px; height: 70px;" align="center">
-			<a href="/pokemon/?p2=1"><p style="padding: 20px; color: #fff; font-size: 12px; background-color: #e65a41;">Determine pokemon with highest number of moves relating to their primary type</p>
+			<a href="./?p2=1"><p style="padding: 20px; color: #fff; font-size: 12px; background-color: #e65a41;">Determine pokemon with highest number of moves relating to their primary type</p>
 	</a><br>
 		</div>
 		
 		<div style="display:block; width: 500px; height: 70px;" align="center">
-			<a href="/pokemon/?p2=1"><p style="padding: 20px; color: #fff; font-size: 12px; background-color: #f6bd20;">Which pokemon change types when evolved</p>
+			<a href="./?p2=1"><p style="padding: 20px; color: #fff; font-size: 12px; background-color: #f6bd20;">Which pokemon change types when evolved</p>
 	</a><br>
 		</div>
 	
-	<br><a href="/pokemon" style="color: #333; font-size: 12px;">Start Over</a>
+	<br><a href="." style="color: #333; font-size: 12px;">Start Over</a>
 	
 	</div>
 	
 	
 	
 	<?php 
-		$con = new mysqli('localhost','root','root','pokemon');
+		$con = new mysqli('localhost','teamrocket','digimon','pokedex');
 		
 		if(isset($_GET['p1'])) {
 			$result = $con->query('
