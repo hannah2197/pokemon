@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<head>
 		<title>Pokemon Game</title>
 	</head>
@@ -33,11 +33,12 @@
 		
 		if(isset($_GET['p1'])) {
 			$result = $con->query('
-				SELECT pkm.pkm_code AS `#`, pkm.pkm_name AS Name, GROUP_CONCAT(move.move_name) AS Moves
-				FROM pokemove, pkm, move
-				WHERE pkm.pkm_code = pokemove.pkm_code
-					AND pokemove.move_code = move.move_code
-				GROUP BY pkm.pkm_code;
+				SELECT pkm.pkm_code AS `#`, pkm.pkm_name AS Name,GROUP_CONCAT(`type`.type_name) AS `Type`,pkm_category AS Species,pkm_weight AS Weight
+	FROM poketype, pkm, `type`
+		WHERE pkm.pkm_code=poketype.pkm_code
+			AND poketype.type_code=`type`.type_code
+	GROUP BY pkm.pkm_code
+	ORDER BY GROUP_CONCAT(`type`.type_code);
 			');
 			
 			 while($row = $result->fetch_assoc()) {
@@ -59,6 +60,25 @@
 					AND move.type_code=poketype.type_code
 				GROUP BY pkm.pkm_code
 				ORDER BY COUNT(pokemove.move_code), pkm.pkm_code,pkm.pkm_name;
+			');
+			while($row = $result->fetch_assoc()) {
+		        echo '<p>'.$row['pkm_code'].' '.$row['Name'].' '.$row['Primary Type'].' '.$row['Moves of Same Type'].'</p>';
+		    }
+		}else if(isset($_GET['p3'])) {
+			$result = $con->query('
+				SELECT base.pkm_name as `Base`, btype.type_name as `Type`,  next.pkm_name as `Evolution`, ntype.type_name as `Type`, next.evolution_condition as `Evolution Condtion`
+	from pkm AS base, pkm AS next, poketype AS bpt, poketype npt,
+		type as btype, type as ntype 
+	WHERE base.pkm_code=next.evolution_code
+		AND bpt.pkm_code=base.pkm_code
+		AND npt.pkm_code=next.pkm_code
+		AND bpt.type_code=btype.type_code
+		AND npt.type_code=ntype.type_code
+		AND bpt.poketype_is_primary=true
+		AND npt.poketype_is_primary=true
+		and bpt.type_code<>npt.type_code
+	ORDER BY base.pkm_code DESC;
+
 			');
 			while($row = $result->fetch_assoc()) {
 		        echo '<p>'.$row['pkm_code'].' '.$row['Name'].' '.$row['Primary Type'].' '.$row['Moves of Same Type'].'</p>';
